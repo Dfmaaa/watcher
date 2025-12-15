@@ -209,23 +209,26 @@ void construct_base_tree(struct dnode *root_dir){
 void trv_tree_test(struct dnode *root){
 
     printf("Location: %s\n\n",root->location);
-
     // files
     struct fnode_list *trv=root->flist;
 
     while(trv!=NULL){
 
-        printf("%s\n",trv->val->location);
-        trv = trv->next;
+        // below condition added for directories with no files.
+        if(trv->val!=NULL){
+
+            printf("%s\n",trv->val->location); // this
+            trv = trv->next;
+
+        }
+
     }
 
     // directories
     struct dnode_list *dtrv= root->dlist;
-
     while(dtrv!=NULL){
 
         trv_tree_test(dtrv->val);
-
         dtrv = dtrv->next;
 
     }
@@ -237,7 +240,7 @@ void trv_tree_test(struct dnode *root){
 
 int main(){
 
-    struct dnode *loc = init_dnode("/home/dfmaaa1/Samex");
+    struct dnode *loc = init_dnode("/home/dfmaaa1/watcher_test");
     
     construct_base_tree(loc);
 
