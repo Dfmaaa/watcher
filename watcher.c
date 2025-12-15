@@ -14,14 +14,14 @@
 
 struct fnode{
 
-    char *rel_location; // this is relative, the driver function will need to handle this when traversing tree
+    char *location; // this is relative, the driver function will need to handle this when traversing tree
     struct stat st;
 
 };
 
 struct dnode{
 
-    char *rel_location; // this is relative, the driver function will need to handle this when traversing tree
+    char *location; // this is relative, the driver function will need to handle this when traversing tree
     struct dnode_list *dlist; 
     struct fnode_list *flist;
 
@@ -54,6 +54,7 @@ struct fnode_list{
 
 void add_to_dnode_l(struct dnode_list *head, struct dnode *dval){
 
+    printf("(add_to_dnode_l)\n");
     if(head->val == NULL){
 
         head->val=dval;
@@ -78,6 +79,7 @@ void add_to_dnode_l(struct dnode_list *head, struct dnode *dval){
 
 void add_to_fnode_l(struct fnode_list *head, struct fnode *fval){
 
+    printf("(add_to_fnode_l)\n");
     if(head->val == NULL){
 
         head->val=fval;
@@ -102,8 +104,10 @@ void add_to_fnode_l(struct fnode_list *head, struct fnode *fval){
 
 struct dnode *init_dnode(char *dloc){
 
+    printf("(init_dnode)\n");
     struct dnode *root_dir=(struct dnode *)malloc(sizeof(struct dnode));
     
+    root_dir->location=dloc;
     root_dir->dlist=(struct dnode_list *)malloc(sizeof(struct dnode_list));
     root_dir->dlist->val=NULL;
     root_dir->flist=(struct fnode_list *)malloc(sizeof(struct fnode_list));
@@ -115,12 +119,13 @@ struct dnode *init_dnode(char *dloc){
 
 void construct_base_tree(struct dnode *root_dir){
     
-    char *dloc = root_dir->rel_location;
-
+    char *dloc = root_dir->location;
+    
+    printf("%s\n",dloc);
     DIR *root = opendir(dloc);
 
 
-
+   // printf("here1\n");
 
     if(root == NULL){
 
@@ -137,42 +142,57 @@ void construct_base_tree(struct dnode *root_dir){
 
             trv = readdir(root);
 
+           // printf("here2");
             if(trv == NULL){
 
                 break;
             }
 
             else{
+                if(strcmp(trv->d_name, ".") !=0 && strcmp(trv->d_name,"..") !=0){
+                    // directory
+                    if(trv->d_type == DT_DIR){
+                        
+                        int size = strlen(root_dir->location) + 2 + strlen(trv->d_name);
 
-                // directory
-                if(trv->d_type == DT_DIR){
+                        char *new_loc =(char*)malloc(sizeof(char)*size);
+
+                        snprintf(new_loc,size,root_dir->location, trv->d_name);
+
+                        struct dnode *add_d = init_dnode(new_loc);
                     
-                    struct dnode *add_d = init_dnode(trv->d_name);
-                    
-                    add_to_dnode_l(root_dir->dlist,add_d);
+                        add_to_dnode_l(root_dir->dlist,add_d);
 
-                    construct_base_tree(add_d);
+                        construct_base_tree(add_d);
                     
                     
-                }
+                    }
 
-                else{
+                    else{
 
-                    struct fnode *add_f=(struct fnode *)malloc(sizeof(struct fnode));
-                    add_f->rel_location=trv->d_name;
+                        struct fnode *add_f=(struct fnode *)malloc(sizeof(struct fnode));
+                        
+                        int size = strlen(root_dir->location) + 2 + strlen(trv->d_name);
 
-                    struct stat sta;
+                        char *new_loc =(char*)malloc(sizeof(char)*size);
 
-                if (stat("file.txt", &sta) == -1) {
-                    perror("stat");
-                } 
+                        snprintf(new_loc,size,root_dir->location, trv->d_name);
 
-                else{
-                    add_f->st=sta;
-                }
+                        add_f->location=new_loc;
+
+                        struct stat sta;
+
+                        if (stat(new_loc, &sta) == -1) {
+                            perror("stat");
+                        } 
+
+                        else{
+                            add_f->st=sta;
+                        }
                 
-                    add_to_fnode_l(root_dir->flist,add_f);
+                        add_to_fnode_l(root_dir->flist,add_f);
 
+                    }
                 }
             
 
@@ -188,14 +208,14 @@ void construct_base_tree(struct dnode *root_dir){
 
 void trv_tree_test(struct dnode *root){
 
-    printf("Location: %s\n\n",root->rel_location);
+    printf("Location: %s\n\n",root->location);
 
     // files
     struct fnode_list *trv=root->flist;
 
     while(trv!=NULL){
 
-        printf("%s\n",trv->val->rel_location);
+        printf("%s\n",trv->val->location);
         trv = trv->next;
     }
 
@@ -218,6 +238,8 @@ void trv_tree_test(struct dnode *root){
 int main(){
 
     struct dnode *loc = init_dnode("/home/dfmaaa1/Samex");
+    
+    construct_base_tree(loc);
 
     trv_tree_test(loc);
 
