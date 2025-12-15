@@ -125,7 +125,7 @@ void construct_base_tree(struct dnode *root_dir){
     if(root == NULL){
 
         printf("%s can't be opened.\n", dloc);
-        return NULL;
+        
 
     }
 
@@ -160,6 +160,17 @@ void construct_base_tree(struct dnode *root_dir){
 
                     struct fnode *add_f=(struct fnode *)malloc(sizeof(struct fnode));
                     add_f->rel_location=trv->d_name;
+
+                    struct stat sta;
+
+                if (stat("file.txt", &sta) == -1) {
+                    perror("stat");
+                } 
+
+                else{
+                    add_f->st=sta;
+                }
+                
                     add_to_fnode_l(root_dir->flist,add_f);
 
                 }
@@ -175,11 +186,40 @@ void construct_base_tree(struct dnode *root_dir){
 
 }
 
+void trv_tree_test(struct dnode *root){
+
+    printf("Location: %s\n\n",root->rel_location);
+
+    // files
+    struct fnode_list *trv=root->flist;
+
+    while(trv!=NULL){
+
+        printf("%s\n",trv->val->rel_location);
+        trv = trv->next;
+    }
+
+    // directories
+    struct dnode_list *dtrv= root->dlist;
+
+    while(dtrv!=NULL){
+
+        trv_tree_test(dtrv->val);
+
+        dtrv = dtrv->next;
+
+    }
+
+
+
+
+}
+
 int main(){
 
     struct dnode *loc = init_dnode("/home/dfmaaa1/Samex");
 
-    printf("Something happened, no segfaults, check contents.\n");
+    trv_tree_test(loc);
 
     return 0;
 
