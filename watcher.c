@@ -54,7 +54,6 @@ struct fnode_list{
 
 void add_to_dnode_l(struct dnode_list *head, struct dnode *dval){
 
-    printf("(add_to_dnode_l)\n");
     if(head->val == NULL){
 
         head->val=dval;
@@ -79,7 +78,6 @@ void add_to_dnode_l(struct dnode_list *head, struct dnode *dval){
 
 void add_to_fnode_l(struct fnode_list *head, struct fnode *fval){
 
-    printf("(add_to_fnode_l)\n");
     if(head->val == NULL){
 
         head->val=fval;
@@ -104,7 +102,6 @@ void add_to_fnode_l(struct fnode_list *head, struct fnode *fval){
 
 struct dnode *init_dnode(char *dloc){
 
-    printf("(init_dnode)\n");
     struct dnode *root_dir=(struct dnode *)malloc(sizeof(struct dnode));
     
     root_dir->location=dloc;
@@ -235,7 +232,7 @@ void trv_tree_test(struct dnode *root){
 
             trv_tree_test(dtrv->val);
             dtrv = dtrv->next;
-            
+
         }
         else{
 
@@ -252,7 +249,7 @@ void trv_tree_test(struct dnode *root){
 
 int main(){
 
-    struct dnode *loc = init_dnode("/home/dfmaaa1/watcher_test");
+    struct dnode *loc = init_dnode("/home/dfmaaa1/Samex");
     
     construct_base_tree(loc);
 
