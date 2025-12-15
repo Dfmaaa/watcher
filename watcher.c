@@ -157,7 +157,7 @@ void construct_base_tree(struct dnode *root_dir){
 
                         char *new_loc =(char*)malloc(sizeof(char)*size);
 
-                        snprintf(new_loc,size,root_dir->location, trv->d_name);
+                        snprintf(new_loc,size,"%s/%s",root_dir->location, trv->d_name);
 
                         struct dnode *add_d = init_dnode(new_loc);
                     
@@ -176,7 +176,7 @@ void construct_base_tree(struct dnode *root_dir){
 
                         char *new_loc =(char*)malloc(sizeof(char)*size);
 
-                        snprintf(new_loc,size,root_dir->location, trv->d_name);
+                        snprintf(new_loc,size,"%s/%s",root_dir->location, trv->d_name);
 
                         add_f->location=new_loc;
 
