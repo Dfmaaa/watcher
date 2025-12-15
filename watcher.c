@@ -231,8 +231,17 @@ void trv_tree_test(struct dnode *root){
     struct dnode_list *dtrv= root->dlist;
     while(dtrv!=NULL){
 
-        trv_tree_test(dtrv->val);
-        dtrv = dtrv->next;
+        if(dtrv->val!=NULL){
+
+            trv_tree_test(dtrv->val);
+            dtrv = dtrv->next;
+            
+        }
+        else{
+
+            break;
+
+        }
 
     }
 
