@@ -221,6 +221,9 @@ void trv_tree_test(struct dnode *root){
             trv = trv->next;
 
         }
+        else{
+            break;
+        }
 
     }
 
