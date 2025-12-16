@@ -14,14 +14,15 @@
 
 struct fnode{
 
-    char *location; // this is relative, the driver function will need to handle this when traversing tree
+    char *location; 
     struct stat st;
 
 };
 
 struct dnode{
 
-    char *location; // this is relative, the driver function will need to handle this when traversing tree
+    char *location; 
+    struct stat st;
     struct dnode_list *dlist; 
     struct fnode_list *flist;
 
@@ -157,7 +158,17 @@ void construct_base_tree(struct dnode *root_dir){
                         snprintf(new_loc,size,"%s/%s",root_dir->location, trv->d_name);
 
                         struct dnode *add_d = init_dnode(new_loc);
-                    
+                        
+                        struct stat sta;
+
+                        if (stat(new_loc, &sta) == -1) {
+                            perror("stat");
+                        } 
+
+                        else{
+                            add_d->st=sta;
+                        }
+
                         add_to_dnode_l(root_dir->dlist,add_d);
 
                         construct_base_tree(add_d);
