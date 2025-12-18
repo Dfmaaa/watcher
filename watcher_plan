@@ -1,0 +1,66 @@
+what you have now: a tree of a directory, that can be accessed, and has a stat corresponding to every file in the tree.
+
+the stat thing might help detecting change in trees.
+
+OBJECTIVE OF THE PROGRAM: Put the initial directory in a tree, make a copy of that tree, and paste its contents in the other directory.
+			
+			  I recommend handling this in a update_diff(T1,T2) function, where the function sees what differences T1 and T2, and then changes T2, to make it like 
+		     	  T1. This will be hard. Now, the simplest way to achieve this behavior would be to do a node by node check of T1, T2, and if even one difference is f
+		     	  found, then we run a recursive delete on T2, and then paste contents of T1 in that directory again. And that makes sense in some cases, but this 
+		     	  simple function would have no way of differentiating between those cases, and cases in which only a single file is modified, It's excessive,
+		     	  and inefficient to do that for small operations. We need a function that doesnt need to be told "oh yeah this is one of those cases, just
+		     	  recursive delete" directly, i want that to be a result, not an instruction. I need to think of a function that can play on the character level, or the
+		     	  directory level, and I think I know how.
+		     	  
+		          INITIAL PHASE:
+		          
+		     	  	AT THE TOP DIRECTORY LEVEL(LEVEL 0): 
+		     	  	
+		     	  		1. If target directory doesn't have same name, dont do anything, exit. Creating directory with same name is user's job.
+		     	  		
+		     	  		2. If it has same name, use construct_base_tree on target directory.
+		     	  		
+		     	  		FILES(LEVEL 1):
+		     	  			
+		     	  			
+		     	  			1. Let L1 be the list of files in initial directory, and L2 be the list of files in target directory,
+		     	  			   remove all the files that aren't in L1, add all the files that are in L1, but not in L2.
+		     	  			   
+		     	  		
+		     	  		DIRECTORIES(LEVEL 1):
+		     	  			
+		     	  			1. Let L1 be the list of directories in initial directory, and let L2 be the list of files in target directory,
+		     	  		           recursive delete all the directories that aren't in L1, recursive add all directories that are in L1 but not in L2.
+		     	  			      
+		     				      
+		     				      
+		     				      
+		     	WATCHING PHASE:
+		     	
+		     	   This is gonna be a slightly different approach, and general(programming aspect to be dealt with at the time of programming),
+		     	   
+		     	   ok so we have two trees now T1, T2.
+		     	   
+		     	   step 1: look for any changes in T1, T2, and make those changes in the tree as well, expect the worst(deleted directories, renaming)
+		     	   step 2: implement a function called equalize that will make T2 like T1, by creating, deleting, or renaming.
+		     	   step 3: implement a function that notices differences between actual files and the tree, and implements changes in the tree, in the actual files.
+			   		
+		     					      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      
+		     				      

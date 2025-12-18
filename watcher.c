@@ -23,6 +23,7 @@ struct dnode{
 
     char *location; 
     struct stat st;
+    struct dnode *parent;
     struct dnode_list *dlist; 
     struct fnode_list *flist;
 
@@ -40,6 +41,19 @@ struct fnode_list{
     struct fnode_list *next;
 
 };
+
+void *mmalloc(size_t size){
+
+    void *mem = malloc(size);
+
+    if(mem == NULL){
+
+        printf("memory cant be allocated.\n");
+        return NULL;
+    }
+    return mem;
+
+}
 
 /*int f_o_d(char *fullpath){
     struct stat st;
@@ -69,7 +83,7 @@ void add_to_dnode_l(struct dnode_list *head, struct dnode *dval){
             trv=trv->next;
         }
 
-        trv->next=(struct dnode_list *)malloc(sizeof(struct dnode_list));
+        trv->next=(struct dnode_list *)mmalloc(sizeof(struct dnode_list));
         trv->next->val=dval;
         trv->next->next=NULL;
 
@@ -93,7 +107,7 @@ void add_to_fnode_l(struct fnode_list *head, struct fnode *fval){
             trv=trv->next;
         }
 
-        trv->next=(struct fnode_list *)malloc(sizeof(struct fnode_list));
+        trv->next=(struct fnode_list *)mmalloc(sizeof(struct fnode_list));
         trv->next->val=fval;
         trv->next->next=NULL;
 
@@ -103,23 +117,22 @@ void add_to_fnode_l(struct fnode_list *head, struct fnode *fval){
 
 struct dnode *init_dnode(char *dloc){
 
-    struct dnode *root_dir=(struct dnode *)malloc(sizeof(struct dnode));
+    struct dnode *root_dir=(struct dnode *)mmalloc(sizeof(struct dnode));
     
     root_dir->location=dloc;
-    root_dir->dlist=(struct dnode_list *)malloc(sizeof(struct dnode_list));
+    root_dir->dlist=(struct dnode_list *)mmalloc(sizeof(struct dnode_list));
     root_dir->dlist->val=NULL;
-    root_dir->flist=(struct fnode_list *)malloc(sizeof(struct fnode_list));
+    root_dir->flist=(struct fnode_list *)mmalloc(sizeof(struct fnode_list));
     root_dir->flist->val=NULL;
 
     return root_dir;
 
 }
 
-void construct_base_tree(struct dnode *root_dir){
+void construct_base_tree(struct dnode *root_dir, struct dnode *parent){
     
     char *dloc = root_dir->location;
-    
-    printf("%s\n",dloc);
+
     DIR *root = opendir(dloc);
 
 
@@ -127,7 +140,7 @@ void construct_base_tree(struct dnode *root_dir){
 
     if(root == NULL){
 
-        printf("%s can't be opened.\n", dloc);
+        printf("%s can't be opened\n", dloc);
         
 
     }
@@ -153,7 +166,7 @@ void construct_base_tree(struct dnode *root_dir){
                         
                         int size = strlen(root_dir->location) + 2 + strlen(trv->d_name);
 
-                        char *new_loc =(char*)malloc(sizeof(char)*size);
+                        char *new_loc =(char*)mmalloc(sizeof(char)*size);
 
                         snprintf(new_loc,size,"%s/%s",root_dir->location, trv->d_name);
 
@@ -171,18 +184,18 @@ void construct_base_tree(struct dnode *root_dir){
 
                         add_to_dnode_l(root_dir->dlist,add_d);
 
-                        construct_base_tree(add_d);
+                        construct_base_tree(add_d,root_dir);
                     
                     
                     }
 
                     else{
 
-                        struct fnode *add_f=(struct fnode *)malloc(sizeof(struct fnode));
+                        struct fnode *add_f=(struct fnode *)mmalloc(sizeof(struct fnode));
                         
                         int size = strlen(root_dir->location) + 2 + strlen(trv->d_name);
 
-                        char *new_loc =(char*)malloc(sizeof(char)*size);
+                        char *new_loc =(char*)mmalloc(sizeof(char)*size);
 
                         snprintf(new_loc,size,"%s/%s",root_dir->location, trv->d_name);
 
@@ -260,11 +273,13 @@ void trv_tree_test(struct dnode *root){
 
 int main(){
 
-    struct dnode *loc = init_dnode("/home/dfmaaa1/Samex");
+    struct dnode *loc = init_dnode("/home/dfmaaa1");
     
-    construct_base_tree(loc);
+    construct_base_tree(loc, NULL);
 
-    trv_tree_test(loc);
+    //trv_tree_test(loc);
+    
+
 
     return 0;
 
