@@ -66,6 +66,56 @@ void *mmalloc(size_t size){
     }
     }*/
 
+
+void read_to_fnode(struct fnode *f){
+
+    FILE *fi = fopen(f->location,"r");
+    int flag = 0;
+    f->text = (struct str_blk *)malloc(sizeof(struct str_blk));
+
+
+    while(1){
+
+        int blk_sz = BLK_SIZE-1;
+
+        char *buffer = (char*)malloc(sizeof(char)*BLK_SIZE);
+
+        int read = fread(buffer,sizeof(char),blk_sz,fi);
+
+        if(read == 0){
+
+            free(buffer);
+            break;
+
+        }
+        
+        if(flag == 0){
+
+            f->text->content = buffer;
+            f->text->next = NULL;
+            flag = 1;
+        }
+
+        else{
+
+            add_str(f->text,buffer);
+
+        }
+
+        if(read<blk_sz){
+
+            break;
+
+        }
+
+
+
+    }
+
+    fclose(fi);
+
+}
+
 void add_to_dnode_l(struct dnode_list *head, struct dnode *dval){
 
     if(head->val == NULL){
@@ -198,7 +248,9 @@ void construct_base_tree(struct dnode *root_dir, struct dnode *parent){
 
                         snprintf(new_loc,size,"%s/%s",root_dir->location, trv->d_name);
 
+                        
                         add_f->location=new_loc;
+                        read_to_fnode(add_f);
 
                         struct stat sta;
 
