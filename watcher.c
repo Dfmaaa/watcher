@@ -324,7 +324,7 @@ void trv_tree_test(struct dnode *root){
 
 int main(){
 
-    struct dnode *loc = init_dnode("/home/dfmaaa1");
+    struct dnode *loc = init_dnode("/home/dfmaaa1/Samex");
     
     construct_base_tree(loc, NULL);
 
