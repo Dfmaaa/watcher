@@ -8,13 +8,12 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
-
-#define IS_D 1
-#define IS_F 0
+#include "str_ll.h"
 
 struct fnode{
 
-    char *location; 
+    char *location;
+    struct str_blk *text; 
     struct stat st;
 
 };
