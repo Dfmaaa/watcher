@@ -1,0 +1,7 @@
+Earlier, I was thinking I'd write a shim, that controls the write(), and read() calls, but then I realised why not just embrace the fact that this is a different project
+so, you're gonna need different functions to work with this tree. It hits two birds with one stone:
+
+1. easier setup
+2. user can simultaneously write to the tree, and to the real filesystem. Who am I to say, hey for this session, you can only write and read to my tree.
+
+I'm gonna implement my own IO functions. and MAYBE, if i felt like it, I'd make a commit() function that actually makes the changes you made to the tree, to the real filesystem, it wont be that hard, because the commands will have an order, that way I wont have to check for things like "does the directory this file is in even exist anymore".
