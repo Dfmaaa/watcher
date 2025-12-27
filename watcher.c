@@ -45,13 +45,13 @@ void read_to_fnode(struct fnode *f){
 
             if(flag == 0){
 
-                f->text->content="";
+                f->text->content=strdup("");
                 f->text->next=NULL;
                 
             }
             else{
 
-                add_str(f->text,"");
+                add_str(f->text,strdup(""));
 
             }
 
