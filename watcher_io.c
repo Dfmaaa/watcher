@@ -21,10 +21,11 @@ char *get_rel_path(char *abs_path){
 
     char *ret =(char*)malloc(sizeof(char)*size);
 
+    char *ret_trv = ret;
     do{
-        *ret = *ptr;
+        *ret_trv = *ptr;
 
-        ret++;
+        ret_trv++;
         ptr++;
 
     }while(*ptr!='\0');
@@ -69,7 +70,15 @@ struct fnode *find_fnode_abs(struct dnode *tree, char *loc){
      while(strcmp(rel_root,token)!=0){
 
         token = strtok(NULL, "/");
+        if(token == NULL){
 
+
+        free(rel_root);
+        free(trv_loc);
+
+        return NULL;
+
+        }
      }
 
      // we wont need this condition actually, it's just there
@@ -177,10 +186,10 @@ int write_abs(struct dnode *tree, char *loc, char *content){
 
     if(((content + t_len) - move) > BLK_SIZE-1){
 
-        char *buffer = (char *)malloc(sizeof(char*)*(BLK_SIZE));
+        char *buffer = (char *)malloc(sizeof(char)*(BLK_SIZE));
 
         memcpy(buffer, move, BLK_SIZE-1);
-        move+=BLK_SIZE;
+        move+=BLK_SIZE-1;
         buffer[BLK_SIZE-1] = '\0';
 
         f->text->content = buffer;
@@ -210,12 +219,12 @@ int write_abs(struct dnode *tree, char *loc, char *content){
         // subtracting pointers to find out how many chars left
         if(((content + t_len) - move) >= BLK_SIZE-1){
 
-            char *buffer = (char *)malloc(sizeof(char*)*(BLK_SIZE));
+            char *buffer = (char *)malloc(sizeof(char)*(BLK_SIZE));
 
             memcpy(buffer, move, BLK_SIZE-1);
 
             buffer[BLK_SIZE-1] = '\0';
-            move+=BLK_SIZE;
+            move+=BLK_SIZE-1;
             add_str(f->text,buffer);
 
 
@@ -226,7 +235,7 @@ int write_abs(struct dnode *tree, char *loc, char *content){
             int left = (content + t_len) - move;
             char *buffer =(char*)malloc(sizeof(char)*(left+1));
     
-            memcpy(buffer,content,left);
+            memcpy(buffer,move,left);
     
             buffer[left] = '\0';
     
