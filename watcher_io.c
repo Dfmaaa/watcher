@@ -116,7 +116,7 @@ struct fnode *find_fnode_abs(struct dnode *tree, char *loc){
 
         while(dli != NULL){
 
-            char *rel_dir = get_rel_path(dli->val);
+            char *rel_dir = get_rel_path(dli->val->location);
 
             if(strcmp(rel_dir,token) == 0){
 
