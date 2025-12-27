@@ -253,3 +253,17 @@ int write_abs(struct dnode *tree, char *loc, char *content){
     return -2; // unusual cases, as all cases of failure and success have been covered.
 
 }
+
+struct str_blk *read_abs(struct dnode *tree, char *loc){
+
+    struct fnode *f = find_fnode_abs(tree, loc);
+
+    if(f == NULL){
+
+        return NULL;
+
+    }
+
+    return f->text;
+
+}
