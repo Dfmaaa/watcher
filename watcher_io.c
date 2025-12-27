@@ -2,7 +2,7 @@
 
 char *get_rel_path(char *abs_path){
 
-    char *ptr = strrchr(abs_path,'/');
+    char *ptr = strrchr(abs_path,'/')+1;
 
     if(ptr == NULL){
 
@@ -19,7 +19,7 @@ char *get_rel_path(char *abs_path){
         size++;
     }while(*trv!='\0');
 
-    char *ret =(char*)malloc(sizeof(char)*size);
+    char *ret =(char*)malloc(sizeof(char)*(size+1));
 
     char *ret_trv = ret;
     do{
@@ -30,7 +30,7 @@ char *get_rel_path(char *abs_path){
 
     }while(*ptr!='\0');
 
-
+    *ret_trv = '\0';
 
     return ret;
 
