@@ -20,3 +20,20 @@ void add_str(struct str_blk *head, char *str){
 
 
 }
+
+void free_str(struct str_blk *head){
+
+    struct str_blk *trv = head;
+
+    while(trv!=NULL){
+
+        free(trv->content);
+        struct str_blk *ptrv = trv;
+        trv=trv->next;
+
+        free(ptrv);
+
+    }
+
+
+}

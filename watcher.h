@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include "str_ll.h"
 
+
 struct fnode{
 
     char *location;
@@ -19,7 +20,7 @@ struct fnode{
 };
 
 struct dnode{
-
+    
     char *location; 
     struct stat st;
     struct dnode *parent;

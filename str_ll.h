@@ -13,3 +13,4 @@ struct str_blk{
 };
 
 void add_str(struct str_blk *, char *);
+void free_str(struct str_blk *);
