@@ -16,6 +16,7 @@ char *get_rel_path(char *abs_path){
 
     do{
         trv++;
+        size++;
     }while(*trv!='\0');
 
     char *ret =(char*)malloc(sizeof(char)*size);
@@ -179,8 +180,8 @@ int write_abs(struct dnode *tree, char *loc, char *content){
         char *buffer = (char *)malloc(sizeof(char*)*(BLK_SIZE));
 
         memcpy(buffer, move, BLK_SIZE-1);
-
-        buffer[BLK_SIZE] = '\0';
+        move+=BLK_SIZE;
+        buffer[BLK_SIZE-1] = '\0';
 
         f->text->content = buffer;
         f->text->next = NULL;
@@ -193,7 +194,6 @@ int write_abs(struct dnode *tree, char *loc, char *content){
         char *buffer =(char*)malloc(sizeof(char)*(left+1));
 
         memcpy(buffer,content,left);
-
         buffer[left] = '\0';
 
         f->text->content = buffer;
@@ -214,8 +214,8 @@ int write_abs(struct dnode *tree, char *loc, char *content){
 
             memcpy(buffer, move, BLK_SIZE-1);
 
-            buffer[BLK_SIZE] = '\0';
-
+            buffer[BLK_SIZE-1] = '\0';
+            move+=BLK_SIZE;
             add_str(f->text,buffer);
 
 
