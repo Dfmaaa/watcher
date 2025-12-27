@@ -2,7 +2,7 @@
 
 char *get_rel_path(char *abs_path){
 
-    char *ptr = strrchr(abs_path,'/')+1;
+    char *ptr = strrchr(abs_path,'/');
 
     if(ptr == NULL){
 
@@ -10,6 +10,7 @@ char *get_rel_path(char *abs_path){
 
     }
     
+    ptr++;
 
     char *trv = ptr;
     int size = 0;

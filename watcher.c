@@ -43,6 +43,18 @@ void read_to_fnode(struct fnode *f){
 
         if(read == 0){
 
+            if(flag == 0){
+
+                f->text->content="";
+                f->text->next=NULL;
+                
+            }
+            else{
+
+                add_str(f->text,"");
+
+            }
+
             free(buffer);
             break;
 
