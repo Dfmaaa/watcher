@@ -29,6 +29,13 @@ void *mmalloc(size_t size){
 void read_to_fnode(struct fnode *f){
 
     FILE *fi = fopen(f->location,"r");
+
+    if(fi == NULL){
+
+        return;
+
+    }
+
     int flag = 0;
     f->text = (struct str_blk *)malloc(sizeof(struct str_blk));
 
