@@ -1,10 +1,3 @@
-I understand—you want the exact original text from your `README.md` preserved, but formatted so the code blocks and headers actually render correctly in Markdown.
-
-The reason your original text was failing is the **tabs** at the start of the lines. I have removed those tabs but kept every word of your text exactly as you wrote it.
-
-Copy and paste the raw code inside this box:
-
-```markdown
 # FOR USERS THAT ONLY WANT THE TREE AND NOT THE HELPER CODE
 Switch to the no_helpers branch, that branch has been made for users that want just the tree, because they wanna use it for something else. I get where those people are coming from, because initially even I didn't know what I wanted to do after writing the tree generation code for a while. That tree can be used for anything.
 
@@ -90,6 +83,3 @@ struct str_blk{
 
 # CORE FUNCTIONALITY HAS BEEN ADDED. Will only return to make file creation and directory creation after I feel the need to prove to myself that I am good at something
 
-```
-
-```
