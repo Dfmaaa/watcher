@@ -8,13 +8,13 @@ from, because initially even I didn't know what I wanted to do after writing the
 
 # FUNCTIONS YOU NEED TO USE TO INTERACT WITH THE TREE-
 
-	1. `struct dnode *init_tree(char *absolute_location_of_dir)` - this creates the tree.
+	1. struct dnode *init_tree(char *absolute_location_of_dir) - this creates the tree.
 	
-	2. `struct fnode *find_fnode_abs(struct dnode *tree, char *absolute_location_of_file)` - this will return the fnode corresponding to a file.
+	2. struct fnode *find_fnode_abs(struct dnode *tree, char *absolute_location_of_file) - this will return the fnode corresponding to a file.
 	
-	3. `int write_abs(struct dnode *tree, char *absolute_location_of_file, char *content)` - this will write to a file, wont append.
+	3. int write_abs(struct dnode *tree, char *absolute_location_of_file, char *content) - this will write to a file, wont append.
 	
-	4. `struct str_blk *read_abs(struct dnode *tree, char *absolute_location_of_file)` - this will return the content of a file(str_blk explained below with all the structs)
+	4. struct str_blk *read_abs(struct dnode *tree, char *absolute_location_of_file) - this will return the content of a file(str_blk explained below with all the structs)
 
 
 # STRUCTURES YOU NEED UNDERSTANDING OF-
