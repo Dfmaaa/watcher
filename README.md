@@ -23,6 +23,7 @@ from, because initially even I didn't know what I wanted to do after writing the
 	## fnode
 	
 	```
+	
 	struct fnode{
 
     		char *location;
@@ -38,6 +39,7 @@ from, because initially even I didn't know what I wanted to do after writing the
 	## dnode
 	
 	```
+	
 	struct dnode{
  
    	       char *location; 
@@ -54,26 +56,32 @@ from, because initially even I didn't know what I wanted to do after writing the
 
 
       ## dnode_list
+      
       ```
+      
       struct dnode_list{
 
              struct dnode *val;
              struct dnode_list *next;
 
      };
+     
      ```
  
     
      - This is just a linked list of sub-directories in a dnode
      
      ## fnode_list
+     
      ```
+     
      struct fnode_list{
 
     	    struct fnode *val;
     	    struct fnode_list *next;
 
     };
+    
     ```
     
     - This is just a linked list of files in a dnode
@@ -82,6 +90,7 @@ from, because initially even I didn't know what I wanted to do after writing the
     ## str_blk
     
     ```
+    
     struct str_blk{
 
            char *content;
@@ -90,6 +99,7 @@ from, because initially even I didn't know what I wanted to do after writing the
 
     
     };
+    
     ```
     
     - This is how the tree stores text, Instead of one big buffer, the program creates a linked list of blocks of text, with predefined size (BLK_SIZE defined in `str_ll.h`)
