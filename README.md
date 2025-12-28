@@ -6,9 +6,9 @@ from, because initially even I didn't know what I wanted to do after writing the
 - NOTE: people switching to the no_helpers branch should read this README too. It has all the information you need to work with the tree.
 
 
-# FUNCTIONS YOU NEED TO USE TO INTERACT WITH THE TREE:
+# FUNCTIONS YOU NEED TO USE TO INTERACT WITH THE TREE-
 
-	1. `truct dnode *init_tree(char *absolute_location_of_dir)` - this creates the tree.
+	1. `struct dnode *init_tree(char *absolute_location_of_dir)` - this creates the tree.
 	
 	2. `struct fnode *find_fnode_abs(struct dnode *tree, char *absolute_location_of_file)` - this will return the fnode corresponding to a file.
 	
@@ -17,7 +17,7 @@ from, because initially even I didn't know what I wanted to do after writing the
 	4. `struct str_blk *read_abs(struct dnode *tree, char *absolute_location_of_file)` - this will return the content of a file(str_blk explained below with all the structs)
 
 
-# STRUCTURES YOU NEED UNDERSTANDING OF:
+# STRUCTURES YOU NEED UNDERSTANDING OF-
  
 	
 	## fnode
