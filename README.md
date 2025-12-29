@@ -15,7 +15,7 @@ Switch to the no_helpers branch, that branch has been made for users that want j
 4. ` struct str_blk *read_abs(struct dnode *tree, char *absolute_location_of_file) ` - this will return the content of a file(str_blk explained below with all the structs).
 
 
-# STRUCTURES YOU NEED UNDERSTANDING OF-
+# STRUCTURES YOU NEED AN UNDERSTANDING OF-
  
 ## fnode
 	
